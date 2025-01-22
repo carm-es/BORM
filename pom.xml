@@ -1,0 +1,175 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>es.carm.borm</groupId>
+  <artifactId>ActualizaFirmaWS</artifactId>
+  <version>2.1.16-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>ActualizaFirmaWS</name>
+  <description>Sellado de tiempo</description>
+  
+  <licenses>
+    <license>
+      <name>AGPL-3.0</name>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:https://vcs.carm.es/svn/actualizafirmaborm/trunk/ActualizaFirmaWS
+    </connection>
+    <developerConnection>scm:svn:https://vcs.carm.es/svn/actualizafirmaborm/trunk/ActualizaFirmaWS
+    </developerConnection>
+    <url>https://vcs.carm.es/svn/actualizafirmaborm/trunk/ActualizaFirmaWS</url>
+  </scm>
+
+  <properties>
+    <axis.version>1.4</axis.version>
+    <log4j2.version>2.22.1</log4j2.version>
+  </properties>
+
+  <dependencies>
+    <!-- Propias que no están en maven -->
+    <dependency>
+      <groupId>metaenlace.accv</groupId>
+      <artifactId>arangi</artifactId>
+      <version>1.4.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>metaenlace.accv</groupId>
+      <artifactId>arangi_base</artifactId>
+      <version>1.4.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j2.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.2.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itext</artifactId>
+      <version>2.1.7</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.bouncycastle</groupId>
+          <artifactId>bctsp-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>bouncycastle</groupId>
+          <artifactId>bcmail-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>bouncycastle</groupId>
+          <artifactId>bcprov-jdk14</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!--NECESARIA PARA QUE FUNCIONE CLIENTE TSA-->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcmail-jdk15on</artifactId>
+      <version>1.56</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-discovery</groupId>
+      <artifactId>commons-discovery</artifactId>
+      <version>0.5</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>metaenlace.afirma</groupId>
+      <artifactId>clienteTSA</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis</artifactId>
+      <version>${axis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis-jaxrpc</artifactId>
+      <version>${axis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.ws.security</groupId>
+      <artifactId>wss4j</artifactId>
+      <version>1.5.12</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.wss</groupId>
+      <artifactId>xws-security</artifactId>
+      <version>3.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.xml.crypto</groupId>
+          <artifactId>xmldsig</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>ISO-8859-1</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>3.0.0-M6</version>
+        <configuration>
+          <tagNameFormat>ActualizaFirmaWS-v@{project.version}</tagNameFormat>
+          <tagBase>https://vcs.carm.es/svn/actualizafirmaborm/tags</tagBase>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

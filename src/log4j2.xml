@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+  <!-- Logging Properties -->
+  <Properties>
+    <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p - %m%n
+    </Property>
+  </Properties>
+
+  <Appenders>
+
+    <RollingFile name="fileLogger"
+      fileName="${sys:catalina.home}/logs/ActualizaFirmaWS.log"
+      filePattern="${sys:catalina.home}/logs/ActualizaFirmaWS-%d{yyyy-MM-dd}.log.gz">
+      <PatternLayout
+        pattern="[ActualizaFirmaWS] %d [%t] %-5p %c{2}:%L %x - %m%n"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="10MB"/>
+        <TimeBasedTriggeringPolicy interval="1"
+          modulate="true"/>
+        <OnStartupTriggeringPolicy/>
+      </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${sys:catalina.home}/logs/" followLinks="true">
+          <IfFileName glob="ActualizaFirmaWS-*.log.gz">
+            <IFAny>
+              <IfLastModified age="P30D"/>
+              <IfAccumulatedFileCount exceeds="30"/>
+            </IFAny>
+          </IfFileName>
+        </Delete>
+        <Delete basePath="${sys:catalina.home}/logs/" followLinks="true">
+          <IfLastModified age="P60D"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+
+    <Console name="consoleLogger">
+      <PatternLayout
+        pattern="[ActualizaFirmaWS] %d [%t] %-5p %c{2}:%L %x - %m%n"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Root level="INFO" additivity="false">
+      <appender-ref ref="fileLogger"/>
+      <appender-ref ref="consoleLogger"/>
+    </Root>
+  </Loggers>
+
+</Configuration>
